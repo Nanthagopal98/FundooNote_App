@@ -9,6 +9,6 @@ namespace BusinessLayer.Interface
     public interface IUserBL
     {
         public UserEntity UserRegistration(UserRegistrationModel registrationModel);
-        public UserLoginModel UserLogin(UserLoginModel loginModel);
+        public string UserLogin(UserLoginModel loginModel);
     }
 }

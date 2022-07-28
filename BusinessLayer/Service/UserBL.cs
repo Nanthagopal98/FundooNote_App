@@ -23,14 +23,14 @@ namespace BusinessLayer.Service
             {
                 return iuserRL.UserRegistration(registrationModel);
             }
-            catch (Exception e)
+            catch (Exception )
             {
 
                 throw;
             }
         }
 
-        public UserLoginModel UserLogin(UserLoginModel loginModel)
+        public string UserLogin(UserLoginModel loginModel)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BusinessLayer.Service
             catch (Exception e)
             {
 
-                throw;
+                throw e;
             }
         }
     }
