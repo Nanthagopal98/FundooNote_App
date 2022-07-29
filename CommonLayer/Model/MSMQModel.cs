@@ -10,7 +10,7 @@ namespace CommonLayer.Model
     public class MSMQModel
     {
         MessageQueue messageQueue = new MessageQueue();
-        private void sendDatatoQueue(string Token)
+        public void sendDatatoQueue(string Token)
         {
             messageQueue.Path = @".\private$\Token";
             if(!MessageQueue.Exists(messageQueue.Path))
@@ -29,12 +29,12 @@ namespace CommonLayer.Model
             var msg = messageQueue.EndReceive(e.AsyncResult);
             string Token = msg.Body.ToString();
             string Subject = "FundooNote Reset Link";
-            string Body = "Token Generated To Reset Password\n" +"Session Token : "+Token;
-            var SMTP = new SmtpClient("smtp@gmail.com")
+            string Body = "Hi Nantha,\nToken Generated To Reset Password\n\n" + "Session Token : " + Token;
+            var SMTP = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("nantha.test123@gmail.com", "Nantha@123"),
-                EnableSsl = true,
+                Credentials = new NetworkCredential("nantha.test123@gmail.com", "zvvyijjzhbxweoms"),
+                EnableSsl = true
             };
             SMTP.Send("nantha.test123@gmail.com", "nantha.test123@gmail.com", Subject, Body);
             messageQueue.BeginReceive();

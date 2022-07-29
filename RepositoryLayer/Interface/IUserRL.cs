@@ -11,5 +11,6 @@ namespace RepositoryLayer.Interface
         public UserEntity UserRegistration(UserRegistrationModel registrationModel);
         public string UserLogin(UserLoginModel loginModel);
         public string GenerateSecurityToken(string email, long userId);
+        public string ForgetPassword(string Email);
     }
 }

@@ -61,5 +61,28 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        [Route("ForgetPassword")]
+        public IActionResult ForgetPassword(string Email)
+        {
+            try
+            {
+                var result = iuserBL.ForgetPassword(Email);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Token Sent To Your Email Successfully"});
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Token Generation Failed" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

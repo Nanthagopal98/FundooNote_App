@@ -91,5 +91,28 @@ namespace RepositoryLayer.Service
             return tokenHandler.WriteToken(token);
 
         }
+        public string ForgetPassword(string Email)
+        {
+            try
+            {
+                var CheckEmail = fundooContext.UserTable.FirstOrDefault(e => e.Email == Email);
+                if(CheckEmail != null)
+                {
+                    var Token = GenerateSecurityToken(CheckEmail.Email, CheckEmail.UserId);
+                    MSMQModel msmqModel = new MSMQModel();
+                    msmqModel.sendDatatoQueue(Token);
+                    return Token.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
