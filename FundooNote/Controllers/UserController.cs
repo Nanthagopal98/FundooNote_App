@@ -1,8 +1,10 @@
 ﻿
 using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FundooNote.Controllers
 {
@@ -64,11 +66,11 @@ namespace FundooNote.Controllers
 
         [HttpPost]
         [Route("ForgetPassword")]
-        public IActionResult ForgetPassword(string Email)
+        public IActionResult ForgetPassword(string email)
         {
             try
             {
-                var result = iuserBL.ForgetPassword(Email);
+                var result = iuserBL.ForgetPassword(email);
                 if (result != null)
                 {
                     return Ok(new { success = true, message = "Token Sent To Your Email Successfully"});
@@ -76,6 +78,31 @@ namespace FundooNote.Controllers
                 else
                 {
                     return BadRequest(new { success = false, message = "Token Generation Failed" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string password, string confirmPassword)
+        {
+            try
+            {
+                var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+                var result = iuserBL.ResetPassword(email, password, confirmPassword);
+                if (result != false)
+                {
+                    return Ok(new { success = true, message = "Password Reset Successfully" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Password Reset Failed" });
                 }
             }
             catch (System.Exception)

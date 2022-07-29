@@ -91,11 +91,11 @@ namespace RepositoryLayer.Service
             return tokenHandler.WriteToken(token);
 
         }
-        public string ForgetPassword(string Email)
+        public string ForgetPassword(string email)
         {
             try
             {
-                var CheckEmail = fundooContext.UserTable.FirstOrDefault(e => e.Email == Email);
+                var CheckEmail = fundooContext.UserTable.FirstOrDefault(e => e.Email == email);
                 if(CheckEmail != null)
                 {
                     var Token = GenerateSecurityToken(CheckEmail.Email, CheckEmail.UserId);
@@ -112,6 +112,21 @@ namespace RepositoryLayer.Service
             {
 
                 throw;
+            }
+        }
+        public bool ResetPassword(string email, string password, string confirmPassword)
+        {
+            if (password.Equals(confirmPassword))
+            {
+                var verifyEmail = fundooContext.UserTable.FirstOrDefault(e => e.Email == email);
+                verifyEmail.Password = password;
+
+                fundooContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
