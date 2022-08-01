@@ -43,5 +43,28 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpGet]
+        [Route("GetNotes")]
+        public IActionResult DisplayNotes(long notesId)
+        {
+            try
+            {
+                var result = iNoteBL.DisplayNotes(notesId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Data Retrieved", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Failed to Retrieve Data" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

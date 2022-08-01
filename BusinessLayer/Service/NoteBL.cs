@@ -29,5 +29,18 @@ namespace BusinessLayer.Service
             }
 
         }
+
+        public NotesEntity DisplayNotes(long notesId)
+        {
+            try
+            {
+                return iNoteRL.DisplayNotes(notesId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
