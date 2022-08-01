@@ -13,5 +13,6 @@ namespace RepositoryLayer.Context
         {
         }
         public DbSet<UserEntity> UserTable { get; set; }  // Model Class Passed inside Dbset and Table Name Given as UserTable
+        public DbSet<NotesEntity> NotesTable { get; set; }   
     }
 }
