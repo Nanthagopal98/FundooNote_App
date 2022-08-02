@@ -121,5 +121,111 @@ namespace RepositoryLayer.Service
             }
 
         }
+        public NotesEntity Archive(long notesId)
+        {
+            try
+            {
+                var findNotes = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if (findNotes.Archive == false)
+                {
+                    findNotes.Archive = true;
+                    fundooContext.SaveChanges();
+                    return findNotes;
+                }
+                else if ((findNotes.Archive == true))
+                {
+                    findNotes.Archive = false;
+                    fundooContext.SaveChanges();
+                    return findNotes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public NotesEntity Pin(long notesId)
+        {
+            try
+            {
+                var findNote = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if (findNote.PinNotes == false)
+                {
+                    findNote.PinNotes = true;
+                    fundooContext.SaveChanges();
+                    return findNote;
+                }
+                else if (findNote.PinNotes == true)
+                {
+                    findNote.PinNotes = false;
+                    fundooContext.SaveChanges();
+                    return findNote;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public NotesEntity Trash(long notesId)
+        {
+            try
+            {
+                var findNote = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if (findNote.Trash == false)
+                {
+                    findNote.Trash = true;
+                    fundooContext.SaveChanges();
+                    return findNote;
+                }
+                else if (findNote.Trash == true)
+                {
+                    findNote.Trash = false;
+                    fundooContext.SaveChanges();
+                    return findNote;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public NotesEntity Color(long notesId, string color)
+        {
+            try
+            {
+                var findNotes = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if(findNotes != null)
+                {
+                    findNotes.Color = color;
+                    fundooContext.SaveChanges();
+                    return findNotes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

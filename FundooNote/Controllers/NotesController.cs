@@ -118,5 +118,98 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
+
+        [HttpPut]
+        [Route("Archive")]
+        public IActionResult Archive(long noteId)
+        {
+            try
+            {
+                var result = iNoteBL.Archive(noteId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Note Archiev Processes", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Faild To Archieve" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("Pin")]
+        public IActionResult Pin(long notesId)
+        {
+            try
+            {
+                var result = iNoteBL.Pin(notesId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Pin or Unpin Notes Done", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Faild Pinning" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+
+        [HttpPut]
+        [Route("Trash")]
+        public IActionResult Trash(long notesId)
+        {
+            try
+            {
+                var result = iNoteBL.Trash(notesId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Trash Performed", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Faild Pinning" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("Color")]
+        public IActionResult Color(long notesId, string color)
+        {
+            try
+            {
+                var result = iNoteBL.Color(notesId, color);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Color Changer", data = result });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Faild Pinning" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
