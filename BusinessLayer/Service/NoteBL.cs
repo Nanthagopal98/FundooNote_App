@@ -30,11 +30,24 @@ namespace BusinessLayer.Service
 
         }
 
-        public NotesEntity DisplayNotes(long notesId)
+        public IEnumerable<NotesEntity> DisplayNotes(long userId)
         {
             try
             {
-                return iNoteRL.DisplayNotes(notesId);
+                return iNoteRL.DisplayNotes(userId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+       
+        public bool DeleteNotes(long notesId)
+        {
+            try
+            {
+                return iNoteRL.DeleteNotes(notesId);
             }
             catch (Exception)
             {

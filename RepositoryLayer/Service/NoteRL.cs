@@ -21,7 +21,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var validateUser = fundooContext.UserTable.FirstOrDefault(e => e.UserId == userId);
+                var validateUser = fundooContext.UserTable.Where(e => e.UserId == userId);
                 if (validateUser != null)
                 {
                     NotesEntity notesEntity = new NotesEntity();
@@ -51,28 +51,14 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public NotesEntity DisplayNotes(long notesId)
+        public IEnumerable<NotesEntity> DisplayNotes(long userId)
         {
             try
             {
-                var result = fundooContext.NotesTable.Where(e => e.NotesId == notesId).FirstOrDefault();
-                if(result != null)
+                var result = fundooContext.NotesTable.Where(e => e.UserId == userId);
+                if (result != null)
                 {
-                    NotesEntity notesEntity = new NotesEntity();
-                    notesEntity.NotesId = result.NotesId;
-                    notesEntity.Title = result.Title;
-                    notesEntity.Description = result.Description;
-                    notesEntity.Reminder = result.Reminder;
-                    notesEntity.Color = result.Color;
-                    notesEntity.Image = result.Image;
-                    notesEntity.Archive = result.Archive;
-                    notesEntity.PinNotes = result.PinNotes;
-                    notesEntity.Trash = result.Trash;
-                    notesEntity.Created = result.Created;
-                    notesEntity.Modified = result.Modified;
-                    notesEntity.UserId= result.UserId;
-                    //fundooContext.NotesTable.Update(notesModel);
-                    return notesEntity;
+                    return result;
                 }
                 else
                 {
@@ -85,5 +71,28 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool DeleteNotes(long notesId)
+        {
+            try
+            {
+                var findNotes = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if(findNotes != null)
+                {
+                    fundooContext.NotesTable.Remove(findNotes);
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+       
     }
 }
