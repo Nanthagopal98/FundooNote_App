@@ -93,6 +93,33 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-       
+        public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId)
+        {
+            try
+            {
+                var findNotes = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if (findNotes != null)
+                {
+                    findNotes.Title = notesUpdateModel.Title;
+                    findNotes.Description = notesUpdateModel.Description;
+                    findNotes.Reminder = notesUpdateModel.Reminder;
+                    findNotes.Color = notesUpdateModel.Color;
+                    findNotes.Image = notesUpdateModel.Image;
+                    findNotes.Modified = DateTime.Now;
+                    fundooContext.SaveChanges();
+                    return findNotes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

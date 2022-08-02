@@ -96,14 +96,13 @@ namespace FundooNote.Controllers
             }
         }
 
-        /*[Authorize]
         [HttpPut]
-        [Route("UpdateNotes")]
-        public IActionResult UpdateNotes(long userId)
+        [Route("Update")]
+        public IActionResult UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId)
         {
             try
             {
-                var result = iNoteBL.UpdateNotes(userId);
+                var result = iNoteBL.UpdateNotes(notesUpdateModel, notesId);
                 if (result != null)
                 {
                     return Ok(new { success = true, message = "Notes Updated Successfully", data = result });
@@ -118,6 +117,6 @@ namespace FundooNote.Controllers
 
                 throw;
             }
-        }*/
+        }
     }
 }
