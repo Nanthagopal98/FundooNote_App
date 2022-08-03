@@ -6,6 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
+
 
 namespace RepositoryLayer.Service
 {
@@ -121,7 +125,7 @@ namespace RepositoryLayer.Service
             }
 
         }
-        public NotesEntity Archive(long notesId)
+        public bool Archive(long notesId)
         {
             try
             {
@@ -130,17 +134,13 @@ namespace RepositoryLayer.Service
                 {
                     findNotes.Archive = true;
                     fundooContext.SaveChanges();
-                    return findNotes;
-                }
-                else if ((findNotes.Archive == true))
-                {
-                    findNotes.Archive = false;
-                    fundooContext.SaveChanges();
-                    return findNotes;
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    findNotes.Archive = false;
+                    fundooContext.SaveChanges();
+                    return false;
                 }
             }
             catch (Exception)
@@ -149,7 +149,7 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public NotesEntity Pin(long notesId)
+        public bool Pin(long notesId)
         {
             try
             {
@@ -158,17 +158,13 @@ namespace RepositoryLayer.Service
                 {
                     findNote.PinNotes = true;
                     fundooContext.SaveChanges();
-                    return findNote;
-                }
-                else if (findNote.PinNotes == true)
-                {
-                    findNote.PinNotes = false;
-                    fundooContext.SaveChanges();
-                    return findNote;
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    findNote.PinNotes = false;
+                    fundooContext.SaveChanges();
+                    return false;
                 }
             }
             catch (Exception)
@@ -177,7 +173,7 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public NotesEntity Trash(long notesId)
+        public bool Trash(long notesId)
         {
             try
             {
@@ -186,17 +182,13 @@ namespace RepositoryLayer.Service
                 {
                     findNote.Trash = true;
                     fundooContext.SaveChanges();
-                    return findNote;
-                }
-                else if (findNote.Trash == true)
-                {
-                    findNote.Trash = false;
-                    fundooContext.SaveChanges();
-                    return findNote;
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    findNote.Trash = false;
+                    fundooContext.SaveChanges();
+                    return false;
                 }
             }
             catch (Exception)
@@ -215,6 +207,39 @@ namespace RepositoryLayer.Service
                     findNotes.Color = color;
                     fundooContext.SaveChanges();
                     return findNotes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string UploadImage(string filePath, long notesId) // path format - D:\Bridgelabz\Bridgelabz\Web API\Imgaes\test1.png
+        {
+            try
+            {
+                var findNotes = fundooContext.NotesTable.First(e => e.NotesId == notesId);
+                if (findNotes != null)
+                {
+                    Account account = new Account("dyod5szeo", "912552913142265", "WNhgZn-_MEOijEd4l3vOlfSWSLc");
+                    Cloudinary cloudinary = new Cloudinary(account);
+                    ImageUploadParams uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(filePath),
+                        PublicId = findNotes.Title
+                    };
+
+                    ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+
+                    findNotes.Modified = DateTime.Now;
+                    findNotes.Image = uploadResult.Url.ToString();
+                    fundooContext.SaveChanges();
+                    return "Upload Successfull";
                 }
                 else
                 {

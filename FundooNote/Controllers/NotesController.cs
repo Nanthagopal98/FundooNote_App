@@ -126,14 +126,15 @@ namespace FundooNote.Controllers
             try
             {
                 var result = iNoteBL.Archive(noteId);
-                if(result != null)
+                if(result == true)
                 {
-                    return Ok(new { success = true, message = "Note Archiev Processes", data = result });
+                    return Ok(new { success = true, message = "Note Archieved", data = result });
                 }
-                else
+                else if(result == false)
                 {
-                    return NotFound(new { success = false, message = "Faild To Archieve" });
+                    return Ok(new { success = true, message = "Note UnArchieved", data = result });
                 }
+                return NotFound(new { success = false, message = "Faild To Archieve" });
             }
             catch (Exception)
             {
@@ -149,14 +150,15 @@ namespace FundooNote.Controllers
             try
             {
                 var result = iNoteBL.Pin(notesId);
-                if (result != null)
+                if (result == true)
                 {
-                    return Ok(new { success = true, message = "Pin or Unpin Notes Done", data = result });
+                    return Ok(new { success = true, message = "Notes Pinned", data = result });
                 }
-                else
+                else if (result == false)
                 {
-                    return NotFound(new { success = false, message = "Faild Pinning" });
+                    return Ok(new { success = true, message = "Notes UnPinned", data = result });
                 }
+                return NotFound(new { success = false, message = "Faild Pinning" });
             }
             catch (Exception)
             {
@@ -173,14 +175,15 @@ namespace FundooNote.Controllers
             try
             {
                 var result = iNoteBL.Trash(notesId);
-                if (result != null)
+                if (result == true)
                 {
-                    return Ok(new { success = true, message = "Trash Performed", data = result });
+                    return Ok(new { success = true, message = "Notes Trashed", data = result });
                 }
-                else
+                else if(result == false)
                 {
-                    return NotFound(new { success = false, message = "Faild Pinning" });
+                    return Ok(new { success = true, message = "Notes Restored", data = result });
                 }
+                return NotFound(new { success = false, message = "Trash Api Faild" });               
             }
             catch (Exception)
             {
@@ -198,17 +201,30 @@ namespace FundooNote.Controllers
                 var result = iNoteBL.Color(notesId, color);
                 if(result != null)
                 {
-                    return Ok(new { success = true, message = "Color Changer", data = result });
+                    return Ok(new { success = true, message = "Color Changed", data = result });
                 }
                 else
                 {
-                    return NotFound(new { success = false, message = "Faild Pinning" });
+                    return NotFound(new { success = false, message = "Color change Failed" });
                 }
             }
             catch (Exception)
             {
-
                 throw;
+            }
+        }
+        [HttpPut]
+        [Route("AddImage")]
+        public IActionResult AddImage(string filePath, long notesId)
+        {
+            var result = iNoteBL.UploadImage(filePath, notesId);
+            if(result != null)
+            {
+                return Ok(new { success = true, message = "Uploaded Success", data = result });
+            }
+            else
+            {
+                return BadRequest(new { success = false, message = "Upload Failed" });
             }
         }
     }

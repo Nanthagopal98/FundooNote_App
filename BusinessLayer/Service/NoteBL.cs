@@ -67,7 +67,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public NotesEntity Archive(long notesId)
+        public bool Archive(long notesId)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public NotesEntity Pin(long notesId)
+        public bool Pin(long notesId)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public NotesEntity Trash(long notesId)
+        public bool Trash(long notesId)
         {
             try
             {
@@ -108,6 +108,18 @@ namespace BusinessLayer.Service
             try
             {
                 return iNoteRL.Color(notesId, color);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string UploadImage(string filePath, long notesId)
+        {
+            try
+            {
+                return iNoteRL.UploadImage(filePath, notesId);
             }
             catch (Exception)
             {

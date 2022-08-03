@@ -12,9 +12,10 @@ namespace RepositoryLayer.Interface
         public IEnumerable<NotesEntity> DisplayNotes(long userId);
         public bool DeleteNotes(long notesId);
         public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId);
-        public NotesEntity Archive(long notesId);
-        public NotesEntity Pin(long notesId);
-        public NotesEntity Trash(long notesId);
+        public bool Archive(long notesId);
+        public bool Pin(long notesId);
+        public bool Trash(long notesId);
         public NotesEntity Color(long notesId, string color);
+        public string UploadImage(string filePath, long notesId);
     }
 }
