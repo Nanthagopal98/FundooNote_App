@@ -43,11 +43,11 @@ namespace BusinessLayer.Service
             }
         }
        
-        public bool DeleteNotes(long notesId)
+        public bool DeleteNotes(long notesId, long userId)
         {
             try
             {
-                return iNoteRL.DeleteNotes(notesId);
+                return iNoteRL.DeleteNotes(notesId, userId);
             }
             catch (Exception)
             {
@@ -55,11 +55,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId)
+        public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId, long userId)
         {
             try
             {
-                return iNoteRL.UpdateNotes(notesUpdateModel, notesId);
+                return iNoteRL.UpdateNotes(notesUpdateModel, notesId, userId);
             }
             catch (Exception)
             {
@@ -67,11 +67,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool Archive(long notesId)
+        public bool Archive(long notesId, long userId)
         {
             try
             {
-                return iNoteRL.Archive(notesId);
+                return iNoteRL.Archive(notesId, userId);
             }
             catch (Exception)
             {
@@ -79,11 +79,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool Pin(long notesId)
+        public bool Pin(long notesId, long userId)
         {
             try
             {
-                return iNoteRL.Pin(notesId);
+                return iNoteRL.Pin(notesId, userId);
             }
             catch (Exception)
             {
@@ -91,11 +91,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool Trash(long notesId)
+        public bool Trash(long notesId, long userId)
         {
             try
             {
-                return iNoteRL.Trash(notesId);
+                return iNoteRL.Trash(notesId, userId);
             }
             catch (Exception)
             {
@@ -103,11 +103,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public NotesEntity Color(long notesId, string color)
+        public NotesEntity Color(long notesId, string color, long userId)
         {
             try
             {
-                return iNoteRL.Color(notesId, color);
+                return iNoteRL.Color(notesId, color, userId);
             }
             catch (Exception)
             {
@@ -115,11 +115,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public string UploadImage(string filePath, long notesId)
+        public string UploadImage(string filePath, long notesId, long userId)
         {
             try
             {
-                return iNoteRL.UploadImage(filePath, notesId);
+                return iNoteRL.UploadImage(filePath, notesId, userId);
             }
             catch (Exception)
             {

@@ -54,7 +54,7 @@ namespace RepositoryLayer.Service
                 var filterUser = fundooContext.LabelTable.Where(e => e.UserId == userId);
                 if (filterUser != null)
                 {
-                    var findLabel = filterUser.Where(e => e.LabelId == labelId).First();
+                    var findLabel = filterUser.Where(e => e.LabelId == labelId).FirstOrDefault();
                     if (findLabel != null)
                     {
                         findLabel.LabelName = labelModel.LabelName;

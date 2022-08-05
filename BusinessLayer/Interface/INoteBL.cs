@@ -10,12 +10,12 @@ namespace BusinessLayer.Interface
     {
         public NotesEntity CreateNotes(NotesModel notesModel, long userId);
         public IEnumerable<NotesEntity> DisplayNotes(long userId);
-        public bool DeleteNotes(long notesId);
-        public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId);
-        public bool Archive(long notesId);
-        public bool Pin(long notesId);
-        public bool Trash(long notesId);
-        public NotesEntity Color(long notesId, string color);
-        public string UploadImage(string filePath, long notesId);
+        public bool DeleteNotes(long notesId, long userId);
+        public NotesEntity UpdateNotes(NotesUpdateModel notesUpdateModel, long notesId, long userId);
+        public bool Archive(long notesId, long userId);
+        public bool Pin(long notesId, long userId);
+        public bool Trash(long notesId, long userId);
+        public NotesEntity Color(long notesId, string color, long userId);
+        public string UploadImage(string filePath, long notesId, long userId);
     }
 }
