@@ -27,11 +27,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool Delete(long ColabId)
+        public bool Delete(long ColabId, long userId)
         {
             try
             {
-                return iCollaboratorRL.Delete(ColabId);
+                return iCollaboratorRL.Delete(ColabId, userId);
             }
             catch (Exception)
             {
@@ -39,11 +39,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public IEnumerable<CollaboratorEntity> Get(long notesId)
+        public IEnumerable<CollaboratorEntity> Get(long notesId, long userId)
         {
             try
             {
-                return iCollaboratorRL.Get(notesId);
+                return iCollaboratorRL.Get(notesId, userId);
             }
             catch (Exception)
             {

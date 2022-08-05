@@ -27,5 +27,41 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public LabelEntity Update(long userId, long labelId, LabelModel labelModel)
+        {
+            try
+            {
+                return iLabelRL.Update(userId, labelId, labelModel);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public IEnumerable<LabelEntity> Get(long userId)
+        {
+            try
+            {
+                return iLabelRL.Get(userId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool Delete(long userId, long labelId)
+        {
+            try
+            {
+                return iLabelRL.Delete(userId, labelId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

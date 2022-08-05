@@ -21,16 +21,25 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var getNotes = fundooContext.NotesTable.Where(e => e.NotesId == collaboratorModel.NotesId).FirstOrDefault();
-                if(getNotes != null)
+                var filterUser = fundooContext.NotesTable.Where(e => e.UserId == userId);
+                if (filterUser != null)
                 {
-                    CollaboratorEntity collaboratorEntity = new CollaboratorEntity();
-                    collaboratorEntity.NotesId = collaboratorModel.NotesId;
-                    collaboratorEntity.Email = collaboratorModel.Email;
-                    collaboratorEntity.UserId = userId;
-                    fundooContext.CollaboratorTable.Add(collaboratorEntity);
-                    fundooContext.SaveChanges();
-                    return collaboratorEntity;
+                    var getNotes = filterUser.Where(e => e.NotesId == collaboratorModel.NotesId).FirstOrDefault();
+                    var getEmail = fundooContext.UserTable.Where(e => e.Email == collaboratorModel.Email).FirstOrDefault();
+                    if (getNotes != null && getEmail != null)
+                    {
+                        CollaboratorEntity collaboratorEntity = new CollaboratorEntity();
+                        collaboratorEntity.NotesId = getNotes.NotesId;
+                        collaboratorEntity.Email = getEmail.Email;
+                        collaboratorEntity.UserId = userId;
+                        fundooContext.CollaboratorTable.Add(collaboratorEntity);
+                        fundooContext.SaveChanges();
+                        return collaboratorEntity;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
@@ -44,16 +53,21 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public bool Delete(long ColabId)
+        public bool Delete(long ColabId, long userId)
         {
             try
             {
-                var findCollaborator = fundooContext.CollaboratorTable.Where(e => e.ColabId == ColabId).First();
-                if (findCollaborator != null)
+                var filterUser = fundooContext.CollaboratorTable.Where(e => e.UserId == userId);
+                if (filterUser != null)
                 {
-                    fundooContext.CollaboratorTable.Remove(findCollaborator);
-                    fundooContext.SaveChanges();
-                    return true;
+                    var findCollaborator = filterUser.Where(e => e.ColabId == ColabId).FirstOrDefault();
+                    if (findCollaborator != null)
+                    {
+                        fundooContext.CollaboratorTable.Remove(findCollaborator);
+                        fundooContext.SaveChanges();
+                        return true;
+                    }
+                        return false;
                 }
                 else
                 {
@@ -66,14 +80,22 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
-        public IEnumerable<CollaboratorEntity> Get(long notesId)
+        public IEnumerable<CollaboratorEntity> Get(long notesId, long userId)
         {
             try
             {
-                var getCollab = fundooContext.CollaboratorTable.Where(e => e.NotesId == notesId);
-                if (getCollab != null)
+                var filterUser = fundooContext.CollaboratorTable.Where(e => e.UserId == userId);
+                if (filterUser != null)
                 {
-                    return getCollab;
+                    var getCollab = filterUser.Where(e => e.NotesId == notesId).ToList();
+                    if (getCollab.Count != 0)
+                    {
+                        return getCollab;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {

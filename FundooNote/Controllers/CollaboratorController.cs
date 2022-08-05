@@ -47,7 +47,8 @@ namespace FundooNote.Controllers
         {
             try
             {
-                var result = icollaboratorBL.Delete(ColabId);
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userId").Value);
+                var result = icollaboratorBL.Delete(ColabId, userId);
                 if (result != false)
                 {
                     return Ok(new { success = true, message = "Deleted Successfully" });
@@ -59,7 +60,7 @@ namespace FundooNote.Controllers
             }
             catch (Exception)
             {
-
+                 
                 throw;
             }
         }
@@ -67,7 +68,8 @@ namespace FundooNote.Controllers
         [Route("Get")]
         public IActionResult Get(long notesId)
         {
-            var result = icollaboratorBL.Get(notesId);
+            long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userId").Value);
+            var result = icollaboratorBL.Get(notesId, userId);
             if(result != null)
             {
                 return Ok(new { success = true, message = "Data Retrieved Successfully", data = result });

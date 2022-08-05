@@ -20,20 +20,102 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var findNotes = fundooContext.NotesTable.Where(e => e.NotesId == labelModel.NotesId);
-                if(findNotes != null)
+                var filterUser = fundooContext.NotesTable.Where(e => e.UserId == userId);
+                if (filterUser != null)
                 {
-                    LabelEntity labelEntity = new LabelEntity();
-                    labelEntity.LabelName = labelModel.LabelName;
-                    labelEntity.NotesId = labelModel.NotesId;
-                    labelEntity.UserId = userId;
-                    fundooContext.LabelTable.Add(labelEntity);
-                    fundooContext.SaveChanges();
-                    return labelEntity;
+                    var findNotes = filterUser.Where(e => e.NotesId == labelModel.NotesId).ToList();
+                    if (findNotes.Count != 0)
+                    {
+                        LabelEntity labelEntity = new LabelEntity();
+                        labelEntity.LabelName = labelModel.LabelName;
+                        labelEntity.NotesId = labelModel.NotesId;
+                        labelEntity.UserId = userId;
+                        fundooContext.LabelTable.Add(labelEntity);
+                        fundooContext.SaveChanges();
+                        return labelEntity;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else { return null; }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public LabelEntity Update(long userId, long labelId, LabelModel labelModel)
+        {
+            try
+            {
+                var filterUser = fundooContext.LabelTable.Where(e => e.UserId == userId);
+                if (filterUser != null)
+                {
+                    var findLabel = filterUser.Where(e => e.LabelId == labelId).First();
+                    if (findLabel != null)
+                    {
+                        findLabel.LabelName = labelModel.LabelName;
+                        fundooContext.SaveChanges();
+                        return findLabel;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else { return null; }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }            
+        }
+        public IEnumerable<LabelEntity> Get(long userId)
+        {
+            try
+            {
+                var filterUser = fundooContext.LabelTable.Where(e => e.UserId == userId);
+                if(filterUser != null)
+                {
+                    return filterUser;
                 }
                 else
                 {
                     return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool Delete(long userId, long labelId)
+        {
+            try
+            {
+                var filterUser = fundooContext.LabelTable.Where(e => e.UserId == userId);
+                if(filterUser != null)
+                {
+                    var findLabel = filterUser.Where(e => e.LabelId == labelId).FirstOrDefault();
+                    if(findLabel != null)
+                    {
+                        fundooContext.LabelTable.Remove(findLabel);
+                        fundooContext.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception)
