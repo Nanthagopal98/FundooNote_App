@@ -4,6 +4,7 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -15,9 +16,11 @@ namespace FundooNote.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserBL iuserBL;
-        public UserController(IUserBL iuserBL)
+        private readonly ILogger<UserController> logger;
+        public UserController(IUserBL iuserBL, ILogger<UserController> logger)
         {
             this.iuserBL = iuserBL;
+            this.logger = logger;  
         }
         [HttpPost]
         [Route("Register")]
@@ -35,10 +38,10 @@ namespace FundooNote.Controllers
                 {
                     return BadRequest(new { success = false, message = "Registration Failed" });
                 }
+                
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
