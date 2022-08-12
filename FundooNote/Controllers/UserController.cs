@@ -22,6 +22,11 @@ namespace FundooNote.Controllers
             this.iuserBL = iuserBL;
             this.logger = logger;  
         }
+        /// <summary>
+        /// User Registration
+        /// </summary>
+        /// <param name="registrationModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Register")]
 
@@ -45,7 +50,11 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// User Login
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         public IActionResult UserLogin(UserLoginModel loginModel)
@@ -68,7 +77,11 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Forget password generate token and send to given mail 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ForgetPassword")]
         public IActionResult ForgetPassword(string email)
@@ -91,7 +104,12 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Authorise using token and then reset password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="confirmPassword"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("ResetPassword")]

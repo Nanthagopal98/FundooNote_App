@@ -37,7 +37,14 @@ namespace FundooNote.Controllers
             this.distributedCache = distributedCache;
             this.logger = logger;
         }
+        // ghostdoc extension installed, and type '///' it automatically creates below content
 
+
+        /// <summary>
+        /// Create Label API
+        /// </summary>
+        /// <param name="labelModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Create")]
         public IActionResult Create(LabelModel labelModel)
@@ -61,7 +68,12 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Update label API
+        /// </summary>
+        /// <param name="labelId"></param>
+        /// <param name="labelModel"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("Update")]
         public IActionResult Update(long labelId, LabelModel labelModel)
@@ -86,6 +98,10 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Get labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("Get")]
         public IActionResult Get()
@@ -101,7 +117,11 @@ namespace FundooNote.Controllers
                 return BadRequest(new { success = false, message = "Retrieve Data Failed" });
             }
         }
-
+        /// <summary>
+        /// Deleete label
+        /// </summary>
+        /// <param name="labelId"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(long labelId)
@@ -125,6 +145,10 @@ namespace FundooNote.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Store data in cache memory and for faster data retrival 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("redis")]
         public async Task<IActionResult> GetAllNotesUsingRedisCache()
         {
