@@ -30,7 +30,8 @@ namespace RepositoryLayer.Service
                 userEntity.FirstName = registrationModel.FirstName;
                 userEntity.LastName = registrationModel.LastName;   
                 userEntity.Email = registrationModel.Email;
-                userEntity.Password = CommonMethods.ConvertToEncrypt(registrationModel.Password);
+                //userEntity.Password = CommonMethods.ConvertToEncrypt(registrationModel.Password);
+                userEntity.Password = registrationModel.Password;
 
                 fundooContext.UserTable.Add(userEntity);
                 int result = fundooContext.SaveChanges();
@@ -54,7 +55,8 @@ namespace RepositoryLayer.Service
             try
             {
                 var result = this.fundooContext.UserTable.Where(data => data.Email == loginModel.Email).FirstOrDefault();
-                if(result != null && CommonMethods.ConvertToDecrypt(result.Password) == loginModel.Password)
+                //if(result != null && CommonMethods.ConvertToDecrypt(result.Password) == loginModel.Password)
+                if (result != null && result.Password == loginModel.Password)
                 {
                     var token = GenerateSecurityToken(result.Email, result.UserId);
                     return token;

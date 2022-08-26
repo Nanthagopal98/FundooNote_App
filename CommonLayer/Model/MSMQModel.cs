@@ -28,17 +28,34 @@ namespace CommonLayer.Model
         {
             var msg = messageQueue.EndReceive(e.AsyncResult);
             string Token = msg.Body.ToString();
-            string Subject = "FundooNote Reset Link";
-            string Body = "Hi Nantha,\nToken Generated To Reset Password\n\n" + "Session Token : " + Token;
+            string url = $"Fundoo Notes Reset Password: <a href=http://localhost:4200/reset/{Token}> Click Here</a>";
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("nantha.test123@gmail.com");
+            mail.To.Add("nantha.test123@gmail.com");
+            mail.Subject = "subject";
+
+            mail.IsBodyHtml = true;
+            string htmlBody;
+            mail.Subject = "FundooNote Reset Link";
+            mail.Body = "<body><p>Dear Nantha,<br><br>" +
+                "We have sent you a link for resetting your password.<br>" +
+                "Please copy it and paste in your swagger authorization.</body>" + url;
+            
+            /*string Body = "<body><p>Dear Nantha,<br><br>" +
+                "We have sent you a link for resetting your password.<br>" +
+                "Please copy it and paste in your swagger authorization.</body>" + url;*/
+            //string url = "https://localhost:4200/api/User/ResetPassword/";
+            //string Body = "Hi Nantha,\nToken Generated To Reset Password\n\n" + "Session Token : " +url +Token;
             var SMTP = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("nantha.test123@gmail.com", "zvvyijjzhbxweoms"),
-                EnableSsl = true
+                Credentials = new NetworkCredential("nantha.test123@gmail.com", "fvamiekeeynqoobe"),
+                EnableSsl = true,
             };
-            SMTP.Send("nantha.test123@gmail.com", "nantha.test123@gmail.com", Subject, Body);
+            SMTP.Send(mail);
             messageQueue.BeginReceive();
         }
+
     }
     
 }
